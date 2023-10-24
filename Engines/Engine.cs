@@ -54,20 +54,6 @@ namespace WeekSixDataBaseTextAssignment.Engines
             return ShowError;
         }
 
-        //This creates the Produce_out file 
-        internal string CreateResultFile(IFile file)
-        {
-            //Learned and reused from assignment #5
-            string resultFilePath = file.FilePath.Replace(file.Extension, $"_out{FilePathAndType.FileExtensions.Text}");
-
-            if (File.Exists(resultFilePath))
-            {
-                File.Delete(resultFilePath);
-            }
-
-            return resultFilePath;
-        }
-
         internal virtual List<Produce> ParseTheProduce(IFile file)
         {
             List<Produce> Produce = new List<Produce>();
@@ -104,6 +90,21 @@ namespace WeekSixDataBaseTextAssignment.Engines
             }
             return Produce;
         }
+
+        //This creates the Produce_out file 
+        internal string CreateResultFile(IFile file)
+        {
+            //Learned and reused from assignment #5
+            string resultFilePath = file.FilePath.Replace(file.Extension, $"_out{FilePathAndType.FileExtensions.Text}");
+
+            if (File.Exists(resultFilePath))
+            {
+                File.Delete(resultFilePath);
+            }
+
+            return resultFilePath;
+        }
+
 
         //Runs every SQL commands that are called to maintain the Produce table
         //The List is the List of Produce objects named produce

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeekSixDataBaseTextAssignment.Engines;
 using WeekSixDataBaseTextAssignment.StuffForFiles;
+using static WeekSixDataBaseTextAssignment.StuffForFiles.FilePathAndType;
 
 namespace WeekSixDataBaseTextAssignment
 {
@@ -17,17 +18,36 @@ namespace WeekSixDataBaseTextAssignment
         List<IFile> ProcessingFiles { get; set; }
         //List to help check for errors, learned in week 5 in class demo
         List<ErrorCheck> ShowError { get; set; }
-        DeLimitEngine engine { get; set; }
+        DeLimitEngine engineParse { get; set; }
         public FileParse()
         {
             ProcessingFiles = new List<IFile>();
             ShowError = new List<ErrorCheck>();
         }
 
+        private void CreateFiles(List<string> files)
+        {
+            foreach (var file in files)
+            {
+                //It adds the files from the folder to the list of ProcessingFiles to get Processed
+                if (file.EndsWith(FilePathAndType.FileExtensions.Pipe))
+                {
+                    TheFiles resultFile = new TheFiles(file, FilePathAndType.FileExtensions.Pipe, FilePathAndType.FileDelimieters.Pipe);
+                    ProcessingFiles.Add(resultFile);
+                }
+                else
+                {
+                    //Checks if the files is supported for the parsing 
+                    ShowError.Add(new ErrorCheck($"Invalid File Extension, {file.Substring(file.LastIndexOf("."))} is not supported", $"{file}"));
+                    break;
+                }
+            }
+        }
+
         public void ParsingFiles(string directPath)
         {
             //Learned from: https://learn.microsoft.com/en-us/dotnet/api/system.environment.newline?view=net-7.0
-            Console.WriteLine($"The files are getting processed: {Environment.NewLine}");
+            Console.WriteLine($"The files are getting processed! {Environment.NewLine}");
 
             List<string> files = GetFilesToProcess(directPath);
 
@@ -41,12 +61,12 @@ namespace WeekSixDataBaseTextAssignment
                 //Goes thorough the files in the Files folder and based on the file extension
                 foreach (var file in ProcessingFiles)
                 {
-                    //Learned from week 4 In Class Demo for processing the different file type with different enginev
+                    //Learned from week 4 In Class Demo for processing the different file type with different engine
                     switch (file.Extension)
                     {
                         case ".txt":
-                            engine = new DeLimitEngine();
-                            ShowError.AddRange(engine.ProcessFile(file));
+                            engineParse = new DeLimitEngine();
+                            ShowError.AddRange(engineParse.ProcessFile(file));
                             break;
                         default:
                             break;
@@ -67,24 +87,6 @@ namespace WeekSixDataBaseTextAssignment
                 //This will write out if there is no problem with the process work
                 Console.WriteLine("The file process work successfully!");
             }
-
-        }
-        private void CreateFiles(List<string> files)
-        {
-            foreach (var file in files)
-            {
-                if (file.EndsWith(FilePathAndType.FileExtensions.Pipe))
-                {
-                    TheFiles resultFile = new TheFiles(file, FilePathAndType.FileExtensions.Pipe, FilePathAndType.FileDelimieters.Pipe);
-                    ProcessingFiles.Add(resultFile);
-                }
-                else
-                {
-                    //Checks if the files is supported for the parsing 
-                    ShowError.Add(new ErrorCheck($"Invalid File Extension, {file.Substring(file.LastIndexOf("."))} is not supported", $"{file}"));
-                    break;
-                }
-            }
         }
 
         private List<string> GetFilesToProcess(string directPath)
@@ -93,7 +95,7 @@ namespace WeekSixDataBaseTextAssignment
 
             try
             {
-                //Creates a result file after going through the parsing method and engines
+                //Takes the list of string and puts it into the _out file
                 outputfile = Directory.GetFiles(directPath).Where(x => !x.Contains("_out")).ToList();
             }
             //To catch errors that are in the code, learned from in class demo in week 5

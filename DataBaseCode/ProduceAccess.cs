@@ -18,12 +18,13 @@ namespace WeekSixDataBaseTextAssignment.DataBaseCode
             connect = DataBaseConnectSingleton.Instance();
             sqlConnectString = connect.PrepareDBConnect();
         }
-        //Learned from Week 6 Powerpoint Prenstation
+
         public List<Produce> SelectAllProduce()
         {
             List<Produce> output = new List<Produce>();
 
             //This opens the connection to the table and creates a string using a SQL command
+            //Learned from Week 6 Powerpoint Prenstation
             using (SqlConnection conn = new SqlConnection(sqlConnectString))
             {
                 conn.Open();
@@ -37,14 +38,14 @@ namespace WeekSixDataBaseTextAssignment.DataBaseCode
 
                     while (reader.Read())
                     {
-                        Produce value = new Produce((string)reader.GetValue(1), (string)reader.GetValue(2), (decimal)reader.GetValue(3), (string)reader.GetValue(4), (DateTime)reader.GetValue(5));
+                        var value = new Produce((string)reader.GetValue(1), (string)reader.GetValue(2), (decimal)reader.GetValue(3), (string)reader.GetValue(4), (DateTime)reader.GetValue(5));
+                        
                         output.Add(value);
                     }
                     reader.Close();
                 }
                 conn.Close();
             }
-
             return output;
         }
         //Learned from Week 6 Powerpoint Prenstation
