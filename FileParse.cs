@@ -32,7 +32,7 @@ namespace WeekSixDataBaseTextAssignment
                 //It adds the files from the folder to the list of ProcessingFiles to get Processed
                 if (file.EndsWith(FilePathAndType.FileExtensions.Pipe))
                 {
-                    TheFiles resultFile = new TheFiles(file, FilePathAndType.FileExtensions.Pipe, FilePathAndType.FileDelimieters.Pipe);
+                    TheFiles resultFile = new TheFiles(file, FilePathAndType.FileExtensions.Pipe, FilePathAndType.FileDelimit.Pipe);
                     ProcessingFiles.Add(resultFile);
                 }
                 else

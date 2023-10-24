@@ -16,7 +16,7 @@ namespace WeekSixDataBaseTextAssignment.StuffForFiles
         }
 
         //The delimiters that affects the pipe file used in assignment 4
-        public sealed class FileDelimieters
+        public sealed class FileDelimit
         {
             public static string Pipe => "|";
         }
