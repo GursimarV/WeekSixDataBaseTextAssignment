@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 namespace WeekSixDataBaseTextAssignment.DataBaseCode
 {
     //Made a Singleton class to make one instance of this class for the connection
-    public sealed class DataBaseConnectSingleton
+    public sealed class DataBaseConnect
     {
-        private DataBaseConnectSingleton()
+        private DataBaseConnect()
         {
 
         }
 
         //Help from: https://www.tutorialsteacher.com/csharp/singleton
-        private static DataBaseConnectSingleton instance = null;
+        private static DataBaseConnect instance = null;
 
-        public static DataBaseConnectSingleton Instance() 
+        public static DataBaseConnect Instance() 
         {
             if (instance == null)
             {
-                instance = new DataBaseConnectSingleton();
+                instance = new DataBaseConnect();
             }
             return instance;
         }

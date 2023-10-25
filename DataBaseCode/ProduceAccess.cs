@@ -12,10 +12,10 @@ namespace WeekSixDataBaseTextAssignment.DataBaseCode
     internal class ProduceAccess
     {
         private string sqlConnectString = string.Empty;
-        private DataBaseConnectSingleton connect;
+        private DataBaseConnect connect;
         public ProduceAccess()
         {
-            connect = DataBaseConnectSingleton.Instance();
+            connect = DataBaseConnect.Instance();
             sqlConnectString = connect.PrepareDBConnect();
         }
 
